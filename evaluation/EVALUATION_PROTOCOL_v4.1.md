@@ -80,7 +80,7 @@ Report at minimum:
 - rubric version, evaluator count and agreement;
 - per-category and per-language scores;
 - critical errors and failure examples;
-- accuracy, false agreement, unjustified stance reversal, evidence-based update, contrarian error, framing invariance, citation entailment, verification coverage, abstention and calibration metrics as applicable;
+- accuracy, false agreement, unjustified stance reversal, evidence-based update, contrarian error, framing/identity invariance, presentation-order invariance, citation entailment, verification coverage, abstention and calibration metrics as applicable;
 - latency, tokens, tool calls and cost boundary;
 - limitations, missing conditions and known confounders.
 
