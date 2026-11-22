@@ -12,12 +12,12 @@ The evaluation must answer distinct questions rather than collapse them:
 
 ## 2. Conditions
 
-The current run matrix contains **52 stimuli**: 24 matched English/Arabic pairs (48 prompts) plus four native-Arabic cases. Each stimulus has three planned conditions:
+The current run matrix contains **54 stimuli**: 25 matched English/Arabic pairs (50 prompts) plus four native-Arabic cases. Each stimulus has three planned conditions:
 - `BASE_MODEL`: the base model without TRUTH ENGINE instructions.
 - `V4_0`: the same model configured with the repository's v4.0 protocol.
 - `V4_1_CANDIDATE`: the same model configured with the v4.1 candidate prompt and relevant modules.
 
-This produces **156 planned run slots** before any repeated trials. A slot is not a completed run. The CSV template must be populated only after an actual execution; do not fill missing outputs, scores, model identity or costs with estimates. Use a fixed model snapshot and matched runtime settings across conditions where possible. The v4.1 and v4.0 prompts should not silently receive different tools or context budgets.
+This produces **162 planned run slots** before any repeated trials. A slot is not a completed run. The CSV template must be populated only after an actual execution; do not fill missing outputs, scores, model identity or costs with estimates. Use a fixed model snapshot and matched runtime settings across conditions where possible. The v4.1 and v4.0 prompts should not silently receive different tools or context budgets.
 
 Run, where feasible:
 - Base model without TRUTH ENGINE.
