@@ -9,5 +9,6 @@
 - Added explicit metrics for unjustified stance reversal, evidence-based updating, contrarian error and framing invariance.
 - Aligned the Arabic source taxonomy term for anecdotal evidence and canonicalized `UNVERIFIABLE_HERE` across operational files.
 - Expanded structural validation and created an initial semantic-parity review log.
+- Added provisional adjudication keys and fixed fixtures for pilot cases; no model runs or validated gold benchmark are claimed.
 
 **Not done:** no model-level baseline/v4.0/v4.1 run, no independent bilingual sign-off, no blind gold-key evaluation, no held-out benchmark, and no release/merge to `main`.
