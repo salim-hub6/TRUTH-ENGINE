@@ -14,7 +14,7 @@
 **Not done:** no model-level baseline/v4.0/v4.1 run, no independent bilingual sign-off, no blind gold-key evaluation, no held-out benchmark, and no release/merge to `main`.
 
 - Added Arabic versions of the adjudication fixtures and evaluation protocol.
-- Added a 156-slot run matrix (52 stimuli × three comparison conditions), a data dictionary defining metric coding and blank cells, and a descriptive score aggregator.
+- Initial run-matrix draft: 156 slots (52 stimuli × three conditions), subsequently expanded to 162 slots after the paired set reached 25 cases and four Arabic-native cases were added.
 - Added branch CI to validate bilingual documentation structure and matrix completeness; CI execution status is to be checked separately.
 
 - Added 52 frozen bilingual/native-Arabic prompt fixtures, a prompt-only API runner, and bilingual setup guidance; the runner leaves scoring to human adjudicators.
