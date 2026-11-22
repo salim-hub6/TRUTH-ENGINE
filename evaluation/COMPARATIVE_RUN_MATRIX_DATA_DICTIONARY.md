@@ -69,6 +69,10 @@ At minimum, use the following metric fields only where the case actually tests t
 
 The evaluator may extend eligibility but must document the reason and apply it consistently across conditions.
 
+## Fixed stimuli and runner
+
+The matrix's `stimulus_ref` identifies a record in `evaluation/TEST_FIXTURES_v4.1.jsonl` using `case_id-language` as the record key. The JSONL file is the fixed request text; adjudication references point to the language-matched evaluator key. `scripts/run_comparative_eval.py` uses the same configured model for the three conditions and runs sequentially. Its results are prompt-only and do not represent execution of tools or independent agents.
+
 ## Comparability rules
 
 1. Keep the same model snapshot and sampling/runtime settings across conditions where possible.
