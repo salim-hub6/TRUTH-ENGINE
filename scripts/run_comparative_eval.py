@@ -178,7 +178,7 @@ def main() -> int:
     parser.add_argument("--model", default=os.getenv("TRUTH_ENGINE_MODEL_ID"))
     parser.add_argument("--provider", default=os.getenv("TRUTH_ENGINE_PROVIDER", "OpenAI-compatible"))
     parser.add_argument("--commit-sha", default=os.getenv("TRUTH_ENGINE_TESTED_COMMIT_SHA"))
-    parser.add_argument("--matrix", type=Path, default=MATRIX_DEFAULT)
+    parser.add_argument("--matrix", type=Path, default=None)
     parser.add_argument("--fixtures", type=Path, default=FIXTURES_DEFAULT)
     parser.add_argument("--output-dir", type=Path, default=Path.home() / "truth-engine-v4.1-runs")
     parser.add_argument("--conditions", default="BASE_MODEL,V4_0,V4_1_CANDIDATE")
@@ -208,6 +208,11 @@ def main() -> int:
             parser.error("Set TRUTH_ENGINE_API_BASE, TRUTH_ENGINE_API_KEY, TRUTH_ENGINE_MODEL_ID and TRUTH_ENGINE_TESTED_COMMIT_SHA (or pass the corresponding flags).")
         if len(args.commit_sha) not in {40, 64}:
             parser.error("--commit-sha must be an immutable 40-character Git SHA or 64-character hash.")
+
+    # Resume automatically from the previous local result matrix unless --matrix was explicitly supplied.
+    output_matrix = args.output_dir / "COMPARATIVE_RESULTS.csv"
+    if args.matrix is None:
+        args.matrix = output_matrix if output_matrix.is_file() else MATRIX_DEFAULT
 
     fixtures = load_fixtures(args.fixtures)
     with args.matrix.open("r", encoding="utf-8-sig", newline="") as handle:
