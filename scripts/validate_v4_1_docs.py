@@ -3,6 +3,7 @@
 These checks do not certify semantic translation parity or model performance.
 """
 from __future__ import annotations
+import csv
 import re
 import sys
 from pathlib import Path
@@ -28,6 +29,9 @@ REQUIRED = [p for pair in PAIRS for p in pair] + [
     "evaluation/NATIVE_ARABIC_PILOT_CASES.md",
     "evaluation/EVALUATION_PROTOCOL_v4.1.md",
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md",
+    "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md",
+    "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv",
+    "scripts/summarize_comparative_runs.py",
     "translations/ar/TRANSLATION_POLICY_AR.md",
 ]
 
@@ -77,11 +81,40 @@ def main() -> int:
     if native_ids != ["ATE41-01", "ATE41-02", "ATE41-03", "ATE41-04"]:
         errors.append(f"native Arabic case IDs incomplete or misordered: {native_ids}")
 
+    # Validate that the comparison matrix covers all 52 stimuli under all 3 conditions.
+    matrix_path = ROOT / "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv"
+    with matrix_path.open("r", encoding="utf-8-sig", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    expected_conditions = {"BASE_MODEL", "V4_0", "V4_1_CANDIDATE"}
+    expected_stimuli = {f"TE41-{i:02d}" for i in range(1, 25)}
+    expected_stimuli |= {f"ATE41-{i:02d}" for i in range(1, 5)}
+    seen = set()
+    for row in rows:
+        key = (row.get("case_id"), row.get("language"), row.get("condition"), row.get("trial"))
+        if key in seen:
+            errors.append(f"duplicate run-matrix key: {key}")
+        seen.add(key)
+    if len(rows) != 156:
+        errors.append(f"expected 156 comparison slots, found {len(rows)}")
+    found_stimuli = {row.get("case_id") for row in rows}
+    if found_stimuli != expected_stimuli:
+        errors.append("run matrix stimulus IDs do not match the 24 paired plus four native-Arabic cases")
+    for case_id in expected_stimuli:
+        case_rows = [row for row in rows if row.get("case_id") == case_id]
+        expected_languages = {"EN", "AR"} if case_id.startswith("TE41-") else {"AR"}
+        observed_languages = {row.get("language") for row in case_rows}
+        if observed_languages != expected_languages:
+            errors.append(f"unexpected language coverage for {case_id}: {observed_languages}")
+        for lang in expected_languages:
+            observed_conditions = {row.get("condition") for row in case_rows if row.get("language") == lang}
+            if observed_conditions != expected_conditions:
+                errors.append(f"missing comparison condition for {case_id}/{lang}: {observed_conditions}")
+
     if errors:
         for e in errors: print(f"FAIL: {e}")
         print(f"Structural checks failed: {len(errors)}")
         return 1
-    print("PASS: required files, fences, placeholders, local links, paired heading counts, 24 paired case IDs and four native Arabic cases.")
+    print("PASS: required files, fences, placeholders, local links, paired headings, 24 paired IDs, four native Arabic cases and 156 comparison slots.")
     print("LIMIT: structural checks do not certify semantic translation parity, security, or protocol performance.")
     return 0
 
