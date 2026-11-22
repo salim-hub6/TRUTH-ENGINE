@@ -14,7 +14,7 @@
 
 | Source idea | v4.0 status | v4.1 work |
 |---|---|---|
-| Constructive critical partnership and anti-sycophancy | Present | Preserve and test behaviourally |
+| Constructive critical partnership and anti-sycophancy | Present | Mandatory cross-cutting module with ten failure modes, stance stability, positive controls and explicit behavior metrics |
 | Cognitive-bias register | Present, broader register | Test important bias families rather than only list names |
 | Atomic claim decomposition | Partial | Standard Claim Ledger with IDs, statuses, scope and evidence links |
 | Source taxonomy | Incomplete | Record primary, secondary, tertiary, anecdotal or unverified type; type is not quality |
@@ -28,7 +28,7 @@
 | Metrics and denominators | Broad metrics exist | Define computation and reportability conditions |
 | Modular architecture | Proposed, not implemented in v4.0 | Separate core, evidence, agent/security, uncertainty/decision and evaluation modules |
 | Domain-specific profiles | Not present | Optional profiles, only after domain-specific review |
-| 70 finalized benchmark cases | Not present; only category counts | Start with pilot cases, then build a validated and held-out set |
+| 70 test categories in v4.0 and v4.1 pilot cases | v4.0 provides categories, not 70 completed validated cases | v4.1 has 24 paired Arabic/English pilot cases plus four native Arabic stimuli; still requires reference keys, held-out tests and model runs |
 | Paired English/Arabic evaluation | General cross-platform guidance only | Add paired translations and native-language cases |
 | High-stakes decision cases | General caution present | Dedicated cases and review criteria |
 | Monthly audit | Suggested in the memo | Defer cadence until operational runs and data exist |
