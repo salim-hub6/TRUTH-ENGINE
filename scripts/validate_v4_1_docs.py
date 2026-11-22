@@ -132,7 +132,7 @@ def main() -> int:
         "model_id", "model_version", "runtime_config", "tools_enabled",
         "agent_execution", "output_ref", "score_0_2", "critical_error",
         "false_agreement", "unjustified_stance_reversal", "evidence_based_update",
-        "contrarian_error", "framing_invariance_pass", "citation_entailment_pass",
+        "contrarian_error", "framing_invariance_pass", "presentation_order_invariance_pass", "citation_entailment_pass",
         "contradiction_detected", "appropriate_abstention", "excessive_abstention",
         "verification_claims_checked", "verification_claims_total", "latency_seconds",
         "input_tokens", "output_tokens", "cost_usd", "evaluator_1", "evaluator_2",
