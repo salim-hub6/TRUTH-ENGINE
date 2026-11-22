@@ -40,3 +40,7 @@ This review is a documentation-level internal pass. It does not establish behavi
 
 10. Added aligned Arabic and English adjudication fixtures for the 24 paired cases, plus four Arabic-native stimuli. The fixtures are fixed test inputs but still require independent bilingual approval.
 11. Added a 156-slot comparison plan and a prompt-only runner. It does not provide real tool execution, separate agent contexts or enforcement tests; those remain outside this runner's scope.
+
+12. Added TE41-25 in both languages as a two-turn stance-reversal test. The runner now sends the follow-up only after preserving the model's actual first response, and aggregates token usage and latency across both requests.
+13. The pilot set now contains 25 paired cases plus four Arabic-native cases: 54 stimuli and 162 planned comparison slots. These counts supersede the earlier 24/52/156 development plan.
+14. TE41-22 remains a within-prompt three-framing consistency probe, not a substitute for a separate-context identity-switch experiment. This limitation is recorded in the data dictionary.
