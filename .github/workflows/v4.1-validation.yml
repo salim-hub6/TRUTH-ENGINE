@@ -36,3 +36,6 @@ jobs:
 
       - name: Smoke-test descriptive score aggregation
         run: python scripts/summarize_comparative_runs.py --output "$RUNNER_TEMP/v4.1-summary-smoke-test.csv"
+
+      - name: Dry-run prompt assembly for English and Arabic
+        run: python scripts/run_comparative_eval.py --dry-run --limit 6
