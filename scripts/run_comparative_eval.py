@@ -249,7 +249,8 @@ def main() -> int:
             fixture = fixtures[(row["case_id"], row["language"])]
             system_prompt = load_system_prompt(row["condition"], row["language"])
             print(f"{row['case_id']} {row['language']} {row['condition']}: turns={2 if fixture.get('follow_up') else 1}, stimulus_chars={len(fixture['stimulus'])}, system_prompt_chars={len(system_prompt)}, system_sha256={hashlib.sha256(system_prompt.encode()).hexdigest() if system_prompt else 'none'}")
-        print(f"Dry run only: {len(selected)} request(s) prepared; no network calls made.")
+        planned_endpoint_requests = sum(2 if fixtures[(row["case_id"], row["language"])].get("follow_up") else 1 for row in selected)
+        print(f"Dry run only: {len(selected)} comparison slot(s) prepared, requiring {planned_endpoint_requests} endpoint request(s); no network calls made.")
         return 0
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -408,7 +409,7 @@ def main() -> int:
         write_matrix(output_matrix, fieldnames, rows)
         print(f"Completed {completed}/{len(selected)}: {row['case_id']} {row['language']} {row['condition']} ({elapsed:.2f}s)")
 
-    print(f"Completed {completed} prompt-only runs.")
+    print(f"Completed {completed} prompt-only comparison slot(s).")
     print(f"Raw outputs: {raw_dir}")
     print(f"Updated matrix: {output_matrix}")
     print("Scores, critical-error flags, applicability-coded metrics and cost remain blank for human adjudication.")
