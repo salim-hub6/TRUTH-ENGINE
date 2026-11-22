@@ -44,3 +44,7 @@ This review is a documentation-level internal pass. It does not establish behavi
 12. Added TE41-25 in both languages as a two-turn stance-reversal test. The runner now sends the follow-up only after preserving the model's actual first response, and aggregates token usage and latency across both requests.
 13. The pilot set now contains 25 paired cases plus four Arabic-native cases: 54 stimuli and 162 planned comparison slots. These counts supersede the earlier 24/52/156 development plan.
 14. TE41-22 remains a within-prompt three-framing consistency probe, not a substitute for a separate-context identity-switch experiment. This limitation is recorded in the data dictionary.
+
+15. TE41-19 was strengthened from a single-turn language/order note to an actual two-turn matched stimulus. The runner sends the reordered wording only after preserving the first answer, allowing direct assessment of order sensitivity.
+16. There are now two multi-turn tests (TE41-19 and TE41-25): 162 comparison slots still require 174 successful endpoint responses for a full one-trial run. This supersedes the earlier 168-request estimate.
+17. The runner now resumes completed local rows and preserves a completed first turn as a partial record if a later turn fails; partial rows are retryable.
