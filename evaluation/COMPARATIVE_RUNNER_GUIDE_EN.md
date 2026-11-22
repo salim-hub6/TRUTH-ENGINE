@@ -68,7 +68,8 @@ python scripts/run_comparative_eval.py \
   --output-dir "$HOME/truth-engine-v4.1-full-run"
 ```
 
-This schedules 162 comparison slots: 25 paired cases × two languages × three conditions, plus four native-Arabic cases × three conditions. TE41-19 and TE41-25 each make their twelve combined slots a two-request exchange, so the full one-trial run sends 174 endpoint requests. The run can incur provider costs. The script does not estimate or fill cost where the provider does not report it.
+This schedules 162 comparison slots: 25 paired cases × two languages × three conditions, plus four native-Arabic cases × three conditions. TE41-19 and TE41-25 each make their twelve combined slots a two-request exchange, so the full one-trial run sends 174 endpoint requests. The run can incur provider costs.
+By default, a subsequent invocation with the same `--output-dir` resumes from the existing local `COMPARATIVE_RESULTS.csv`: completed rows are skipped and rows marked `PARTIAL_RUN` are retried. To intentionally start over, use `--overwrite` or choose a new output directory. Keep the result matrix and raw outputs together; they contain the run history. The script does not estimate or fill cost where the provider does not report it.
 
 Use the same model snapshot and runtime settings for all three conditions. The runner uses `max_completion_tokens` by default. For a compatible endpoint that requires the older field, use `--token-field max_tokens`. If the model does not support temperature, leave it omitted; if supported and pre-registered, pass the same `--temperature` for all conditions. Do not mix settings silently.
 
