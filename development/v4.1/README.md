@@ -30,6 +30,10 @@ This work converts the supplied development memo and v4.0 requirements into modu
 - `evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_EN.md` / `_AR.md` — 24 paired pilot cases, including positive controls against performative contrarianism; four native Arabic cases are separately listed in `evaluation/NATIVE_ARABIC_PILOT_CASES.md`.
 - `evaluation/EVALUATION_PROTOCOL_v4.1.md` — execution, scoring, statistical caution and reporting rules.
 - `evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md` — provisional fixed fixtures and evaluator anchors for 24 paired and four native-Arabic cases; not a validated gold benchmark.
+- `evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md` — Arabic fixtures for the 24 paired cases; independent bilingual review is still required.
+- `evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv` — 156 planned run slots: 52 stimuli × three conditions (base model, v4.0, v4.1).
+- `scripts/summarize_comparative_runs.py` — descriptive metric aggregation for manually scored outputs; blank values remain unscored/not applicable.
+- `.github/workflows/v4.1-validation.yml` — structural and matrix checks on branch updates.
 
 ### Design and governance
 
