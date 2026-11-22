@@ -48,3 +48,7 @@ This review is a documentation-level internal pass. It does not establish behavi
 15. TE41-19 was strengthened from a single-turn language/order note to an actual two-turn matched stimulus. The runner sends the reordered wording only after preserving the first answer, allowing direct assessment of order sensitivity.
 16. There are now two multi-turn tests (TE41-19 and TE41-25): 162 comparison slots still require 174 successful endpoint responses for a full one-trial run. This supersedes the earlier 168-request estimate.
 17. The runner now resumes completed local rows and preserves a completed first turn as a partial record if a later turn fails; partial rows are retryable.
+
+18. The validator now checks the exact 36-column matrix schema, the complete case-specific stimulus and adjudication anchors, and nonempty follow-up text for both multi-turn cases.
+19. A local mock-endpoint smoke test exercised the two-turn request flow: the first assistant response was carried into the follow-up context and token usage was aggregated. This was a runner-mechanics test using synthetic responses, not a model benchmark.
+20. No model-level BASE_MODEL/V4_0/V4_1 comparison has been executed. The latest queried GitHub commit status exposed no check runs; CI should therefore be treated as unconfirmed, not passed.
