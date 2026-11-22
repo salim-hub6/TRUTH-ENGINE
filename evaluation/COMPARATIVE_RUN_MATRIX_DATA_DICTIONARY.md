@@ -71,7 +71,7 @@ The evaluator may extend eligibility but must document the reason and apply it c
 
 ## Fixed stimuli and runner
 
-The matrix's `stimulus_ref` identifies a record in `evaluation/TEST_FIXTURES_v4.1.jsonl` using `case_id-language` as the record key. The JSONL file is the fixed request text; adjudication references point to the language-matched evaluator key. `scripts/run_comparative_eval.py` uses the same configured model for the three conditions and runs sequentially. Its results are prompt-only and do not represent execution of tools or independent agents.
+The matrix's `stimulus_ref` identifies a record in `evaluation/TEST_FIXTURES_v4.1.jsonl` using `case_id-language` as the record key. The JSONL file is the fixed request text; adjudication references point to the language-matched evaluator key. `scripts/run_comparative_eval.py` uses the same configured model for the three conditions and runs sequentially. TE41-25 has a `follow_up` field; the runner sends the first turn, stores the model's actual reply in the conversation, then sends the pressure follow-up as a second endpoint request. Token usage and latency are summed across both turns. The 162 matrix rows therefore yield 168 endpoint requests in a full one-trial run. Results are prompt-only and do not represent execution of tools or independent agents.
 
 ## Comparability rules
 
