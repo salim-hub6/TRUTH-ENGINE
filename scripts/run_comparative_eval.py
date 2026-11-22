@@ -101,6 +101,7 @@ def call_endpoint(
     timeout: int,
     retries: int,
     token_field: str,
+    messages_override: list[dict[str, str]] | None = None,
 ) -> tuple[str, dict[str, Any], float]:
     url = base_url.rstrip("/") + "/chat/completions"
     parsed = urllib.parse.urlparse(url)
@@ -112,7 +113,10 @@ def call_endpoint(
     messages = []
     if system_prompt:
         messages.append({"role": instruction_role, "content": system_prompt})
-    messages.append({"role": "user", "content": stimulus})
+    if messages_override is None:
+        messages.append({"role": "user", "content": stimulus})
+    else:
+        messages.extend(messages_override)
     body: dict[str, Any] = {
         "model": model,
         "messages": messages,
@@ -239,7 +243,7 @@ def main() -> int:
         for row in selected:
             fixture = fixtures[(row["case_id"], row["language"])]
             system_prompt = load_system_prompt(row["condition"], row["language"])
-            print(f"{row['case_id']} {row['language']} {row['condition']}: stimulus_chars={len(fixture['stimulus'])}, system_prompt_chars={len(system_prompt)}, system_sha256={hashlib.sha256(system_prompt.encode()).hexdigest() if system_prompt else 'none'}")
+            print(f"{row['case_id']} {row['language']} {row['condition']}: turns={2 if fixture.get('follow_up') else 1}, stimulus_chars={len(fixture['stimulus'])}, system_prompt_chars={len(system_prompt)}, system_sha256={hashlib.sha256(system_prompt.encode()).hexdigest() if system_prompt else 'none'}")
         print(f"Dry run only: {len(selected)} request(s) prepared; no network calls made.")
         return 0
 
@@ -254,7 +258,7 @@ def main() -> int:
         system_prompt = load_system_prompt(row["condition"], row["language"])
         stimulus = fixture["stimulus"]
         try:
-            answer, payload, elapsed = call_endpoint(
+            first_answer, payload_first, elapsed_first = call_endpoint(
                 base_url=args.base_url,
                 api_key=args.api_key,
                 model=args.model,
@@ -267,14 +271,46 @@ def main() -> int:
                 retries=args.retries,
                 token_field=args.token_field,
             )
-        except Exception as exc:
+            payloads = [payload_first]
+            intermediate_answer = None
+            follow_up = fixture.get("follow_up")
+            if follow_up:
+                intermediate_answer = first_answer
+                conversation = [
+                    {"role": "user", "content": stimulus},
+                    {"role": "assistant", "content": first_answer},
+                    {"role": "user", "content": follow_up},
+                ]
+                answer, payload_second, elapsed_second = call_endpoint(
+                    base_url=args.base_url,
+                    api_key=args.api_key,
+                    model=args.model,
+                    system_prompt=system_prompt,
+                    stimulus="",
+                    instruction_role=args.instruction_role,
+                    max_completion_tokens=args.max_completion_tokens,
+                    temperature=args.temperature,
+                    timeout=args.timeout,
+                    retries=args.retries,
+                    token_field=args.token_field,
+                    messages_override=conversation,
+                )
+                payloads.append(payload_second)
+                elapsed = elapsed_first + elapsed_second
+            else:
+                answer = first_answer
+                elapsed = elapsed_first
+            usage = {
+                key: sum(int((item.get("usage") or {}).get(key, 0) or 0) for item in payloads)
+                for key in ("prompt_tokens", "completion_tokens", "total_tokens")
+            }
+            payload = payloads[-1]        except Exception as exc:
             print(f"STOP: {row['case_id']}/{row['language']}/{row['condition']}: {exc}", file=sys.stderr)
             write_matrix(output_matrix, fieldnames, rows)
             return 2
 
         raw_name = f"{row['case_id']}-{row['language']}-{row['condition']}-trial{row.get('trial','1')}.json"
         raw_path = raw_dir / raw_name
-        usage = payload.get("usage") or {}
         model_returned = payload.get("model", args.model)
         raw_record = {
             "case_id": row["case_id"],
@@ -287,8 +323,10 @@ def main() -> int:
             "tested_commit_sha": args.commit_sha,
             "system_prompt_sha256": hashlib.sha256(system_prompt.encode("utf-8")).hexdigest() if system_prompt else None,
             "stimulus": stimulus,
+            "follow_up": fixture.get("follow_up"),
+            "assistant_intermediate": intermediate_answer,
             "assistant_output": answer,
-            "response_id": payload.get("id"),
+            "response_ids": [item.get("id") for item in payloads],
             "finish_reason": (payload.get("choices") or [{}])[0].get("finish_reason"),
             "usage": usage,
             "latency_seconds": round(elapsed, 6),
