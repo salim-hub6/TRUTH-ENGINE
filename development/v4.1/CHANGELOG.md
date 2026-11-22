@@ -12,3 +12,7 @@
 - Added provisional adjudication keys and fixed fixtures for pilot cases; no model runs or validated gold benchmark are claimed.
 
 **Not done:** no model-level baseline/v4.0/v4.1 run, no independent bilingual sign-off, no blind gold-key evaluation, no held-out benchmark, and no release/merge to `main`.
+
+- Added Arabic versions of the adjudication fixtures and evaluation protocol.
+- Added a 156-slot run matrix (52 stimuli × three comparison conditions), a data dictionary defining metric coding and blank cells, and a descriptive score aggregator.
+- Added branch CI to validate bilingual documentation structure and matrix completeness; CI execution status is to be checked separately.
