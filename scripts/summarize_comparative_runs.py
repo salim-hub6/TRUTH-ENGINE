@@ -68,7 +68,7 @@ def main() -> int:
     if not input_path.exists():
         parser.error(f"input file not found: {input_path}")
 
-    groups: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
+    groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
     with input_path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         required = {"case_id", "language", "condition", "score_0_2", "critical_error"}
@@ -80,15 +80,18 @@ def main() -> int:
             language = (row.get("language") or "").strip()
             if not condition or not language:
                 continue
-            groups[(condition, language)].append(row)
+            category = (row.get("category") or "UNSPECIFIED").strip()
+            groups[(condition, language, category)].append(row)
+            groups[(condition, language, "ALL_CATEGORIES")].append(row)
 
     output_rows: list[dict[str, str]] = []
-    for (condition, language), rows in sorted(groups.items()):
+    for (condition, language, category), rows in sorted(groups.items()):
         scores = [x for row in rows if (x := parse_number(row.get("score_0_2"))) is not None]
         critical = [x for row in rows if (x := parse_flag(row.get("critical_error"))) is not None]
         result = {
             "condition": condition,
             "language": language,
+            "category": category,
             "run_slots": str(len(rows)),
             "scored_runs": str(len(scores)),
             "mean_score_0_2": fmt(statistics.mean(scores) if scores else None),
@@ -131,7 +134,7 @@ def main() -> int:
         writer.writeheader()
         writer.writerows(output_rows)
 
-    print(f"Wrote descriptive summary for {len(output_rows)} condition/language groups to {output_path}")
+    print(f"Wrote descriptive summary for {len(output_rows)} condition/language/category groups to {output_path}")
     print("No output was scored by this script. Blank cells remain not applicable/unscored, not zero.")
     return 0
 
