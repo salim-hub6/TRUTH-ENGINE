@@ -20,6 +20,9 @@ The English/Arabic pairs for the Core Protocol, Anti-Sycophancy and Constructive
 2. The Arabic Master Prompt used `UNVERIFIABLE` while the normative Claim Ledger uses `UNVERIFIABLE_HERE`. The prompt was aligned to the exact canonical status code.
 3. The Arabic design proposal used the shorter `UNVERIFIABLE` label. It was aligned to `UNVERIFIABLE_HERE`, with the operational meaning restricted to current tools, sources and access.
 4. The pilot count and source-gap records were updated from 20 to 24 paired cases.
+5. The Arabic Core Protocol's definition of verification coverage was expanded to state its denominator explicitly, matching the English operational definition.
+6. The Arabic Master Prompt now names the Decision Analyst function, matching the English prompt; a minor Arabic typo in the citation-entailment definition was also corrected.
+7. The bilingual pilot set is now accompanied by provisional adjudication keys and standardized fixtures. These are evaluator guidance, not results or an independently validated gold set.
 
 ## Remaining review requirements
 
