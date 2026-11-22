@@ -1,6 +1,6 @@
 # TRUTH ENGINE v4.1 — Pilot Adjudication Keys and Fixtures
 
-**Status:** Provisional evaluator guide for the 24 paired cases and four native-Arabic cases. It is not a validated gold benchmark and contains no model-run results.
+**Status:** Provisional evaluator guide for the 25 paired cases and four native-Arabic cases. It is not a validated gold benchmark and contains no model-run results.
 
 ## 1. Scoring rules
 
