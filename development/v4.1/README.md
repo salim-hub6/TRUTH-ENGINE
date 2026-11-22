@@ -2,36 +2,46 @@
 
 **Status:** Working draft. Not released, not merged into `main`, and not performance-validated.
 
-This branch starts the v4.1 modular development track while preserving v4.0 as the public baseline. The purpose is to turn partially specified v4.0 principles and material from the project's development memo into testable operating procedures—not to add terminology or claim proven gains.
+This branch begins the v4.1 modular development track while preserving v4.0 as the public baseline. Its goal is to convert partially specified principles and material from the supplied development memo into testable procedures—not to add terminology for its own sake or claim unmeasured gains.
 
 ## Language governance
 
-- English is the normative authoring source for shared protocol requirements and module maintenance.
-- Arabic is an official translation intended to preserve the same obligations, permissions, status definitions, thresholds, and stop conditions.
-- Arabic is not a separate policy fork. Translation changes must be reviewed against the English source.
-- User-facing language remains the user's language. English-first source maintenance does not require English-only operation.
-- No language is presumed superior across all models and tasks. Paired English/Arabic evaluation is required, including native Arabic tasks.
+- English is the planned normative authoring source for shared requirements and module maintenance.
+- Arabic is intended to be an official, reviewed translation—not a separate policy fork.
+- Users should continue to interact in their preferred language. English-first maintenance does not imply English-only operation.
+- No universal performance advantage is assumed for English. Paired Arabic/English testing, including native-language tasks, is required before making language-performance claims.
+- The English normative modules and their Arabic counterparts are part of the working development package; staged publication on this branch is still in progress.
 
-## v4.1 workstreams
+## Files currently staged on this branch
 
-1. **Core protocol:** task triage, claim-based analysis, evidence requirements, falsifiability, and stopping rules.
-2. **Claim and evidence ledger:** atomic claims, source provenance, source classification, contradiction tracking, and six-question source checks.
-3. **Agent independence and security:** blind first-pass assessment, role separation, persuasion resistance, prompt-injection boundaries, and least privilege.
-4. **Uncertainty and decision analysis:** confidence, evidence strength, verification coverage, residual uncertainty, and the firewall between factual findings and recommendations.
-5. **Evaluation:** pilot cases, reproducible runs, metric definitions, failure severity, bilingual parity, and release gates.
+- `development/v4.1/DESIGN_PROPOSAL_AR.md` — design rationale and proposed changes.
+- `development/v4.1/SOURCE_GAP_MATRIX_EN.md` — comparison of supplied source material with v4.0.
+- `development/v4.1/REFERENCES.md` — research and standards references.
+- `prompts/TRUTH_ENGINE_v4.1_MASTER_PROMPT_AR.md` — Arabic candidate activation prompt.
+- `evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_AR.md` — initial Arabic pilot cases.
 
-## Source material reviewed
+The complete working package also contains English and Arabic module drafts, an evaluation procedure, and translation governance. Those files are not all committed to this branch yet; do not infer their presence from this README.
 
-The development track compares the current v4.0 repository with the supplied v4.0 Arabic copies, both v3.1 variants, and the Arabic development memo containing the proposed Master Prompt 2.0. The two v3.1 files are not interchangeable: one variant weakens tool-permission and action-approval safeguards. That variant is quarantined pending provenance review and is not a source for v4.1.
+## Core v4.1 workstreams
+
+1. **Claim and evidence operations:** atomic claim IDs, evidence provenance, source classification, source checks and contradiction tracking.
+2. **Independent assessment:** first-pass isolation, role separation, anti-persuasion safeguards and explicit disclosure when true independence is unavailable.
+3. **Falsifiability:** testable predictions, potential falsifiers, alternatives, discriminating tests and predeclared success criteria.
+4. **Uncertainty and decisions:** keep confidence, evidence strength, verification coverage and residual uncertainty distinct; prevent decision preferences from rewriting factual findings.
+5. **Evaluation and release governance:** reproducible pilot runs, defined metrics, failure severity, bilingual semantic parity and explicit release gates.
+
+## Source integrity warning
+
+The supplied v3.1 files are not all interchangeable. One variant weakens permission boundaries and approval requirements for sensitive actions. Its provenance is unknown; it is quarantined and must not be merged without provenance review.
 
 ## Release gate
 
-Do not describe this candidate as stable until:
-- module content and internal consistency are reviewed;
-- Arabic/English semantic parity has been checked by bilingual reviewers;
+Do not label this candidate stable until:
+- the complete English modules are staged and reviewed;
+- Arabic/English semantic parity is checked by bilingual reviewers;
 - pilot cases are run against a baseline and v4.0 under recorded conditions;
 - critical security tests pass;
-- accuracy, abstention, cost, latency, and regressions are reported;
-- the change log and source citations are reviewed.
+- accuracy, abstention, cost, latency and regressions are reported;
+- source references and the change log are reviewed.
 
-No benchmark result or performance improvement is claimed. This README records the branch's development intent; it is not evidence that the complete module set is already published on this branch.
+No benchmark result or performance improvement is claimed.
