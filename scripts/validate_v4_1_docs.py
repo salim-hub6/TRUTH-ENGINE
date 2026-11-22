@@ -113,7 +113,7 @@ def main() -> int:
             fixture_keys.add(key)
             if not isinstance(fixture.get("stimulus"), str) or not fixture["stimulus"].strip():
                 errors.append(f"empty stimulus in JSONL fixture at line {line_no}")
-            if fixture.get("case_id") == "TE41-25" and not isinstance(fixture.get("follow_up"), str):
+            if fixture.get("case_id") in {"TE41-19", "TE41-25"} and not isinstance(fixture.get("follow_up"), str):
                 errors.append(f"TE41-25 requires a follow_up turn in JSONL fixture at line {line_no}")
     expected_fixture_keys = {(f"TE41-{i:02d}", lang) for i in range(1, 26) for lang in ("EN", "AR")}
     expected_fixture_keys |= {(f"ATE41-{i:02d}", "AR") for i in range(1, 5)}
