@@ -31,13 +31,11 @@ REQUIRED = [p for pair in PAIRS for p in pair] + [
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md",
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md",
     "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv",
-    "scripts/summarize_comparative_runs.py",
-    "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md",
-    "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv",
+    "scripts/validate_v4_1_docs.py",
     "scripts/summarize_comparative_runs.py",
     "translations/ar/TRANSLATION_POLICY_AR.md",
+    ".github/workflows/v4.1-validation.yml",
 ]
-
 def main() -> int:
     errors = []
     for rel in REQUIRED:
