@@ -81,8 +81,8 @@ def main() -> int:
     for rel in ("evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_EN.md", "evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_AR.md"):
         text=(ROOT/rel).read_text(encoding="utf-8")
         ids=re.findall(r"^### (TE41-\d{2}) —", text, re.M)
-        if len(ids) != 24 or len(set(ids)) != 24:
-            errors.append(f"expected 24 unique pilot cases in {rel}; found {len(ids)}")
+        if len(ids) != 25 or len(set(ids)) != 24:
+            errors.append(f"expected 25 unique pilot cases in {rel}; found {len(ids)}")
         case_sets.append(ids)
     if len(case_sets)==2 and case_sets[0] != case_sets[1]:
         errors.append("English/Arabic pilot case IDs or ordering differ")
@@ -94,7 +94,7 @@ def main() -> int:
     for rel in ("evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md", "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md"):
         key_text = (ROOT / rel).read_text(encoding="utf-8")
         key_ids = re.findall(r"^### (TE41-\d{2}) —", key_text, re.M)
-        if key_ids != [f"TE41-{i:02d}" for i in range(1, 25)]:
+        if key_ids != [f"TE41-{i:02d}" for i in range(1, 26)]:
             errors.append(f"adjudication keys missing, duplicated or misordered in {rel}")
 
     # Validate immutable prompt fixtures for every language/case combination.
@@ -115,17 +115,17 @@ def main() -> int:
             fixture_keys.add(key)
             if not isinstance(fixture.get("stimulus"), str) or not fixture["stimulus"].strip():
                 errors.append(f"empty stimulus in JSONL fixture at line {line_no}")
-    expected_fixture_keys = {(f"TE41-{i:02d}", lang) for i in range(1, 25) for lang in ("EN", "AR")}
+    expected_fixture_keys = {(f"TE41-{i:02d}", lang) for i in range(1, 26) for lang in ("EN", "AR")}
     expected_fixture_keys |= {(f"ATE41-{i:02d}", "AR") for i in range(1, 5)}
     if fixture_keys != expected_fixture_keys:
         errors.append(f"fixture coverage mismatch: found {len(fixture_keys)}, expected {len(expected_fixture_keys)}")
 
-    # Validate that the comparison matrix covers all 52 stimuli under all 3 conditions.
+    # Validate that the comparison matrix covers all 54 stimuli under all 3 conditions.
     matrix_path = ROOT / "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv"
     with matrix_path.open("r", encoding="utf-8-sig", newline="") as handle:
         rows = list(csv.DictReader(handle))
     expected_conditions = {"BASE_MODEL", "V4_0", "V4_1_CANDIDATE"}
-    expected_stimuli = {f"TE41-{i:02d}" for i in range(1, 25)}
+    expected_stimuli = {f"TE41-{i:02d}" for i in range(1, 26)}
     expected_stimuli |= {f"ATE41-{i:02d}" for i in range(1, 5)}
     seen = set()
     for row in rows:
@@ -133,11 +133,11 @@ def main() -> int:
         if key in seen:
             errors.append(f"duplicate run-matrix key: {key}")
         seen.add(key)
-    if len(rows) != 156:
-        errors.append(f"expected 156 comparison slots, found {len(rows)}")
+    if len(rows) != 162:
+        errors.append(f"expected 162 comparison slots, found {len(rows)}")
     found_stimuli = {row.get("case_id") for row in rows}
     if found_stimuli != expected_stimuli:
-        errors.append("run matrix stimulus IDs do not match the 24 paired plus four native-Arabic cases")
+        errors.append("run matrix stimulus IDs do not match the 25 paired plus four native-Arabic cases")
     for case_id in expected_stimuli:
         case_rows = [row for row in rows if row.get("case_id") == case_id]
         expected_languages = {"EN", "AR"} if case_id.startswith("TE41-") else {"AR"}
@@ -153,7 +153,7 @@ def main() -> int:
         for e in errors: print(f"FAIL: {e}")
         print(f"Structural checks failed: {len(errors)}")
         return 1
-    print("PASS: required files, paired docs, adjudication keys, 52 fixed stimuli, four native Arabic cases and 156 comparison slots.")
+    print("PASS: required files, paired docs, adjudication keys, 52 fixed stimuli, four native Arabic cases and 162 comparison slots.")
     print("LIMIT: structural checks do not certify semantic translation parity, security, or protocol performance.")
     return 0
 
