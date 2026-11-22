@@ -1,47 +1,51 @@
 # TRUTH ENGINE v4.1 — Development Candidate
 
-**Status:** Working draft. Not released, not merged into `main`, and not performance-validated.
+**Status:** Working draft on `development/v4.1-modular-preview`; not a released version, not merged into `main`, and not performance-validated.
 
-This branch begins the v4.1 modular development track while preserving v4.0 as the public baseline. Its goal is to convert partially specified principles and material from the supplied development memo into testable procedures—not to add terminology for its own sake or claim unmeasured gains.
+## Purpose
 
-## Language governance
+This work converts the supplied development memo and v4.0 requirements into modular, testable operating requirements. It does not replace v4.0. The v4.0 files remain the baseline for controlled comparison.
 
-- English is the planned normative authoring source for shared requirements and module maintenance.
-- Arabic is intended to be an official, reviewed translation—not a separate policy fork.
-- Users should continue to interact in their preferred language. English-first maintenance does not imply English-only operation.
-- No universal performance advantage is assumed for English. Paired Arabic/English testing, including native-language tasks, is required before making language-performance claims.
-- The English normative modules and their Arabic counterparts are part of the working development package; staged publication on this branch is still in progress.
+## Normative language and parity
 
-## Files currently staged on this branch
+- English is the normative source for shared protocol requirements and module maintenance.
+- Arabic is the official companion translation, not a separate policy fork; its internal parity review is in progress and final bilingual sign-off remains a release gate.
+- The user's interaction language remains the user's choice.
+- Translation parity concerns obligations, permissions, evidence statuses, verification thresholds, stop/abstention conditions, metric definitions and release gates—not literal word matching.
+- No universal English-over-Arabic performance advantage is assumed. Paired and native-language testing is required.
 
-- `development/v4.1/DESIGN_PROPOSAL_AR.md` — design rationale and proposed changes.
-- `development/v4.1/SOURCE_GAP_MATRIX_EN.md` — comparison of supplied source material with v4.0.
-- `development/v4.1/REFERENCES.md` — research and standards references.
-- `prompts/TRUTH_ENGINE_v4.1_MASTER_PROMPT_AR.md` — Arabic candidate activation prompt.
-- `evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_AR.md` — initial Arabic pilot cases.
+## Module inventory
 
-The complete working package also contains English and Arabic module drafts, an evaluation procedure, and translation governance. Those files are not all committed to this branch yet; do not infer their presence from this README.
+### Protocol
 
-## Core v4.1 workstreams
+- `protocol/v4.1/CORE_PROTOCOL_EN.md` / `_AR.md` — normative core.
+- `protocol/v4.1/ANTI_SYCOPHANCY_AND_CRITICAL_PARTNERSHIP_EN.md` / `_AR.md` — **mandatory cross-cutting module**; preserves anti-sycophancy as the project's primary purpose.
+- `protocol/v4.1/CLAIM_AND_EVIDENCE_LEDGER_EN.md` / `_AR.md` — atomic claims, evidence provenance, source checks and contradiction handling.
+- `protocol/v4.1/AGENT_INDEPENDENCE_AND_SECURITY_EN.md` / `_AR.md` — role separation, blinded assessment, persuasion resistance and tool boundaries.
+- `protocol/v4.1/UNCERTAINTY_DECISION_AND_EVALUATION_EN.md` / `_AR.md` — confidence, verification coverage, residual uncertainty, decision separation, metric definitions and evaluation governance.
 
-1. **Claim and evidence operations:** atomic claim IDs, evidence provenance, source classification, source checks and contradiction tracking.
-2. **Independent assessment:** first-pass isolation, role separation, anti-persuasion safeguards and explicit disclosure when true independence is unavailable.
-3. **Falsifiability:** testable predictions, potential falsifiers, alternatives, discriminating tests and predeclared success criteria.
-4. **Uncertainty and decisions:** keep confidence, evidence strength, verification coverage and residual uncertainty distinct; prevent decision preferences from rewriting factual findings.
-5. **Evaluation and release governance:** reproducible pilot runs, defined metrics, failure severity, bilingual semantic parity and explicit release gates.
+### Prompts and evaluation
 
-## Source integrity warning
+- `prompts/TRUTH_ENGINE_v4.1_MASTER_PROMPT_EN.md` / `_AR.md` — compact activation prompts; neither replaces the modules.
+- `evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_EN.md` / `_AR.md` — 24 paired pilot cases, including positive controls against performative contrarianism; four native Arabic cases are separately listed in `evaluation/NATIVE_ARABIC_PILOT_CASES.md`.
+- `evaluation/EVALUATION_PROTOCOL_v4.1.md` — execution, scoring, statistical caution and reporting rules.
 
-The supplied v3.1 files are not all interchangeable. One variant weakens permission boundaries and approval requirements for sensitive actions. Its provenance is unknown; it is quarantined and must not be merged without provenance review.
+### Design and governance
+
+- `development/v4.1/DESIGN_PROPOSAL_AR.md` — Arabic design rationale and change proposal.
+- `development/v4.1/SOURCE_GAP_MATRIX_AR.md` and `SOURCE_GAP_MATRIX_EN.md` — comparison of source material, v4.0 coverage and v4.1 operationalization.
+- `development/v4.1/REFERENCES.md` — background sources; they do not establish v4.1 effectiveness.
+- `development/v4.1/SEMANTIC_PARITY_REVIEW_LOG.md` — internal review record; independent bilingual sign-off remains outstanding.
+- `development/v4.1/CHANGELOG.md` — working change record.
+- `translations/ar/TRANSLATION_POLICY_AR.md` — language governance and semantic parity requirements.
+- `scripts/validate_v4_1_docs.py` — structural documentation checks only.
+
+## Evaluation status
+
+The documentation validator checks required files, code fences, placeholders, internal links, paired heading structures and pilot-case IDs. The semantic review log records corrections and unresolved sign-off requirements. These checks do not establish semantic equivalence by themselves.
+
+No model-level comparison has yet been run. A valid comparison must run the same cases against the base model, v4.0 and v4.1 under recorded, matched conditions, with independent scoring, raw outputs, tool traces, latency and cost. Do not claim improvement from structural checks or pilot-set design.
 
 ## Release gate
 
-Do not label this candidate stable until:
-- the complete English modules are staged and reviewed;
-- Arabic/English semantic parity is checked by bilingual reviewers;
-- pilot cases are run against a baseline and v4.0 under recorded conditions;
-- critical security tests pass;
-- accuracy, abstention, cost, latency and regressions are reported;
-- source references and the change log are reviewed.
-
-No benchmark result or performance improvement is claimed.
+Do not label this candidate stable until: (1) all normative modules are reviewed, (2) Arabic/English semantic parity is signed off, (3) the 24 pilot cases are run against baseline and v4.0 with recorded conditions, (4) critical security tests pass, (5) a held-out test and regression review are completed, (6) cost and latency are reported, and (7) a reviewer approves the change log. No performance improvement is claimed here.
