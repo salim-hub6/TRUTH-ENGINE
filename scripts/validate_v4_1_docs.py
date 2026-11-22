@@ -123,12 +123,39 @@ def main() -> int:
     # Validate that the comparison matrix covers all 54 stimuli under all 3 conditions.
     matrix_path = ROOT / "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv"
     with matrix_path.open("r", encoding="utf-8-sig", newline="") as handle:
-        rows = list(csv.DictReader(handle))
+        reader = csv.DictReader(handle)
+        matrix_columns = list(reader.fieldnames or [])
+        rows = list(reader)
+    expected_columns = [
+        "case_id", "language", "case_type", "category", "condition", "trial",
+        "stimulus_ref", "adjudication_ref", "tested_commit_sha", "provider",
+        "model_id", "model_version", "runtime_config", "tools_enabled",
+        "agent_execution", "output_ref", "score_0_2", "critical_error",
+        "false_agreement", "unjustified_stance_reversal", "evidence_based_update",
+        "contrarian_error", "framing_invariance_pass", "citation_entailment_pass",
+        "contradiction_detected", "appropriate_abstention", "excessive_abstention",
+        "verification_claims_checked", "verification_claims_total", "latency_seconds",
+        "input_tokens", "output_tokens", "cost_usd", "evaluator_1", "evaluator_2",
+        "adjudication_notes",
+    ]
+    if matrix_columns != expected_columns:
+        errors.append("run matrix columns are missing, reordered or unexpected")
     expected_conditions = {"BASE_MODEL", "V4_0", "V4_1_CANDIDATE"}
     expected_stimuli = {f"TE41-{i:02d}" for i in range(1, 26)}
     expected_stimuli |= {f"ATE41-{i:02d}" for i in range(1, 5)}
     seen = set()
     for row in rows:
+        case_id = row.get("case_id")
+        language = row.get("language")
+        expected_key_file = "evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md" if language == "EN" else "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md"
+        expected_fixture_ref = f"evaluation/TEST_FIXTURES_v4.1.jsonl#{case_id}-{language}"
+        if not (row.get("adjudication_ref") or "").startswith(expected_key_file + "#"):
+            errors.append(f"incorrect adjudication key path for {case_id}/{language}")
+        if row.get("stimulus_ref") != expected_fixture_ref:
+            errors.append(f"incorrect frozen stimulus reference for {case_id}/{language}")
+        expected_case_type = "PAIRED" if str(case_id).startswith("TE41-") else "NATIVE_AR"
+        if row.get("case_type") != expected_case_type:
+            errors.append(f"incorrect case_type for {case_id}: {row.get('case_type')}")
         key = (row.get("case_id"), row.get("language"), row.get("condition"), row.get("trial"))
         if key in seen:
             errors.append(f"duplicate run-matrix key: {key}")
