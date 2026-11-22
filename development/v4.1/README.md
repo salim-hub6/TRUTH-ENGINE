@@ -35,7 +35,7 @@ This work converts the supplied development memo and v4.0 requirements into modu
 - `scripts/run_comparative_eval.py` — optional runner for an OpenAI-compatible Chat Completions endpoint; API secrets stay outside the repository.
 - `evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md` — provisional fixed fixtures and evaluator anchors for 25 paired and four native-Arabic cases; not a validated gold benchmark.
 - `evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md` — Arabic fixtures for the 25 paired cases; independent bilingual review is still required.
-- `evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv` — 162 planned run slots: 54 stimuli × three conditions (base model, v4.0, v4.1).
+- `evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv` — 162 planned run slots: 54 stimuli × three conditions (base model, v4.0, v4.1); a full one-trial run sends 168 API requests because TE41-25 uses two turns.
 - `scripts/summarize_comparative_runs.py` — descriptive metric aggregation for manually scored outputs; blank values remain unscored/not applicable.
 - `.github/workflows/v4.1-validation.yml` — structural and matrix checks on branch updates.
 
