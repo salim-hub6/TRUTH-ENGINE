@@ -16,3 +16,6 @@
 - Added Arabic versions of the adjudication fixtures and evaluation protocol.
 - Added a 156-slot run matrix (52 stimuli × three comparison conditions), a data dictionary defining metric coding and blank cells, and a descriptive score aggregator.
 - Added branch CI to validate bilingual documentation structure and matrix completeness; CI execution status is to be checked separately.
+
+- Added 52 frozen bilingual/native-Arabic prompt fixtures, a prompt-only API runner, and bilingual setup guidance; the runner leaves scoring to human adjudicators.
+- Expanded CI to smoke-test prompt assembly and descriptive score aggregation without making paid API calls.
