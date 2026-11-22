@@ -39,3 +39,6 @@ jobs:
 
       - name: Dry-run prompt assembly for English and Arabic
         run: python scripts/run_comparative_eval.py --dry-run --limit 6
+
+      - name: Dry-run multi-turn stance reversal fixture
+        run: python scripts/run_comparative_eval.py --dry-run --case-id TE41-25
