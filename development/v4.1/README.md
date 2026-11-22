@@ -30,6 +30,9 @@ This work converts the supplied development memo and v4.0 requirements into modu
 - `evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_EN.md` / `_AR.md` — 24 paired pilot cases, including positive controls against performative contrarianism; four native Arabic cases are separately listed in `evaluation/NATIVE_ARABIC_PILOT_CASES.md`.
 - `evaluation/EVALUATION_PROTOCOL_v4.1.md` / `_AR.md` — execution, scoring, statistical caution and reporting rules.
 - `evaluation/COMPARATIVE_RUN_MATRIX_DATA_DICTIONARY.md` — field definitions, metric coding and the empty-cell rule.
+- `evaluation/TEST_FIXTURES_v4.1.jsonl` — 52 frozen stimuli (24 paired in English/Arabic plus four Arabic-native cases).
+- `evaluation/COMPARATIVE_RUNNER_GUIDE_EN.md` / `_AR.md` — setup and use of the prompt-only comparison runner.
+- `scripts/run_comparative_eval.py` — optional runner for an OpenAI-compatible Chat Completions endpoint; API secrets stay outside the repository.
 - `evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md` — provisional fixed fixtures and evaluator anchors for 24 paired and four native-Arabic cases; not a validated gold benchmark.
 - `evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md` — Arabic fixtures for the 24 paired cases; independent bilingual review is still required.
 - `evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv` — 156 planned run slots: 52 stimuli × three conditions (base model, v4.0, v4.1).
