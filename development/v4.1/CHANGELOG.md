@@ -26,3 +26,5 @@
 - Converted TE41-19 into a two-turn order-reversal test with fixed Arabic/English follow-up prompts; the full one-trial matrix now needs 174 endpoint requests across 162 slots.
 - Added automatic local resumption from the prior results matrix and preservation/retry of partial multi-turn runs.
 - Updated the descriptive summary to report per-category results alongside overall language/condition totals.
+
+- Split presentation-order invariance (TE41-19) from framing/identity invariance (TE41-22) into separate result fields and summary rates; expanded the run matrix schema from 36 to 37 columns.
