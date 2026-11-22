@@ -27,6 +27,7 @@ REQUIRED = [p for pair in PAIRS for p in pair] + [
     "development/v4.1/CHANGELOG.md",
     "evaluation/NATIVE_ARABIC_PILOT_CASES.md",
     "evaluation/EVALUATION_PROTOCOL_v4.1.md",
+    "evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md",
     "translations/ar/TRANSLATION_POLICY_AR.md",
 ]
 
