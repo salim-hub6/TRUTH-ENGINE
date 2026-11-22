@@ -59,7 +59,7 @@ python scripts/run_comparative_eval.py \
 
 This sends six requests. Check endpoint acceptance, context limits, returned model ID, usage, latency and raw outputs before any larger run.
 
-## 6. Run the full 156-slot matrix
+## 6. Run the full 162-slot matrix
 
 After the smoke comparison is reviewed:
 
@@ -68,7 +68,7 @@ python scripts/run_comparative_eval.py \
   --output-dir "$HOME/truth-engine-v4.1-full-run"
 ```
 
-This schedules 156 sequential prompt-only requests: 24 paired cases × two languages × three conditions, plus four native-Arabic cases × three conditions. The run can incur provider costs. The script does not estimate or fill cost where the provider does not report it.
+This schedules 162 sequential prompt-only requests: 25 paired cases × two languages × three conditions, plus four native-Arabic cases × three conditions. The run can incur provider costs. The script does not estimate or fill cost where the provider does not report it.
 
 Use the same model snapshot and runtime settings for all three conditions. The runner uses `max_completion_tokens` by default. For a compatible endpoint that requires the older field, use `--token-field max_tokens`. If the model does not support temperature, leave it omitted; if supported and pre-registered, pass the same `--temperature` for all conditions. Do not mix settings silently.
 
@@ -76,7 +76,7 @@ Use the same model snapshot and runtime settings for all three conditions. The r
 
 The output directory contains:
 - `raw/`: one JSON record per completed response, including prompt, answer, returned model, usage, latency, commit SHA and system-prompt hash.
-- `COMPARATIVE_RESULTS.csv`: a copy of the 156-slot matrix updated with execution metadata and local raw-output references.
+- `COMPARATIVE_RESULTS.csv`: a copy of the 162-slot matrix updated with execution metadata and local raw-output references.
 
 Two evaluators should score the results using the adjudication keys and data dictionary. Populate `score_0_2`, critical flags and only the metrics applicable to that case. Empty fields mean not applicable/not evaluated, never zero.
 
