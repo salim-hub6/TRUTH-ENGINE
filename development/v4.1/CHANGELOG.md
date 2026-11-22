@@ -22,3 +22,7 @@
 
 - Added TE41-25 as a genuine two-turn stance-reversal test, with the runner preserving the model's first response before sending the pressure follow-up.
 - Expanded the paired set to 25 cases and the matrix to 54 stimuli / 162 condition slots; added the Arabic fixture, runner support and matching adjudication anchor.
+
+- Converted TE41-19 into a two-turn order-reversal test with fixed Arabic/English follow-up prompts; the full one-trial matrix now needs 174 endpoint requests across 162 slots.
+- Added automatic local resumption from the prior results matrix and preservation/retry of partial multi-turn runs.
+- Updated the descriptive summary to report per-category results alongside overall language/condition totals.
