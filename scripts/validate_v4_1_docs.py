@@ -4,6 +4,7 @@ These checks do not certify semantic translation parity or model performance.
 """
 from __future__ import annotations
 import csv
+import json
 import re
 import sys
 from pathlib import Path
@@ -17,6 +18,7 @@ PAIRS = [
     ("protocol/v4.1/UNCERTAINTY_DECISION_AND_EVALUATION_EN.md", "protocol/v4.1/UNCERTAINTY_DECISION_AND_EVALUATION_AR.md"),
     ("prompts/TRUTH_ENGINE_v4.1_MASTER_PROMPT_EN.md", "prompts/TRUTH_ENGINE_v4.1_MASTER_PROMPT_AR.md"),
     ("evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_EN.md", "evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_AR.md"),
+    ("evaluation/EVALUATION_PROTOCOL_v4.1.md", "evaluation/EVALUATION_PROTOCOL_v4.1_AR.md"),
     ("evaluation/EVALUATION_PROTOCOL_v4.1.md", "evaluation/EVALUATION_PROTOCOL_v4.1_AR.md"),
 ]
 REQUIRED = [p for pair in PAIRS for p in pair] + [
@@ -34,7 +36,10 @@ REQUIRED = [p for pair in PAIRS for p in pair] + [
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md",
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md",
     "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv",
+    "evaluation/COMPARATIVE_RUN_MATRIX_DATA_DICTIONARY.md",
+    "evaluation/TEST_FIXTURES_v4.1.jsonl",
     "scripts/summarize_comparative_runs.py",
+    "scripts/run_comparative_eval.py",
     "translations/ar/TRANSLATION_POLICY_AR.md",
     ".github/workflows/v4.1-validation.yml",
 ]
@@ -90,6 +95,29 @@ def main() -> int:
         if key_ids != [f"TE41-{i:02d}" for i in range(1, 25)]:
             errors.append(f"adjudication keys missing, duplicated or misordered in {rel}")
 
+    # Validate immutable prompt fixtures for every language/case combination.
+    fixture_path = ROOT / "evaluation/TEST_FIXTURES_v4.1.jsonl"
+    fixture_keys = set()
+    with fixture_path.open("r", encoding="utf-8") as handle:
+        for line_no, line in enumerate(handle, 1):
+            if not line.strip():
+                continue
+            try:
+                fixture = json.loads(line)
+            except json.JSONDecodeError as exc:
+                errors.append(f"invalid JSONL fixture at line {line_no}: {exc}")
+                continue
+            key = (fixture.get("case_id"), fixture.get("language"))
+            if key in fixture_keys:
+                errors.append(f"duplicate JSONL fixture key: {key}")
+            fixture_keys.add(key)
+            if not isinstance(fixture.get("stimulus"), str) or not fixture["stimulus"].strip():
+                errors.append(f"empty stimulus in JSONL fixture at line {line_no}")
+    expected_fixture_keys = {(f"TE41-{i:02d}", lang) for i in range(1, 25) for lang in ("EN", "AR")}
+    expected_fixture_keys |= {(f"ATE41-{i:02d}", "AR") for i in range(1, 5)}
+    if fixture_keys != expected_fixture_keys:
+        errors.append(f"fixture coverage mismatch: found {len(fixture_keys)}, expected {len(expected_fixture_keys)}")
+
     # Validate that the comparison matrix covers all 52 stimuli under all 3 conditions.
     matrix_path = ROOT / "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv"
     with matrix_path.open("r", encoding="utf-8-sig", newline="") as handle:
@@ -123,7 +151,7 @@ def main() -> int:
         for e in errors: print(f"FAIL: {e}")
         print(f"Structural checks failed: {len(errors)}")
         return 1
-    print("PASS: required files, fences, placeholders, links, bilingual headings and case IDs, adjudication keys, four native Arabic cases and 156 comparison slots.")
+    print("PASS: required files, paired docs, adjudication keys, 52 fixed stimuli, four native Arabic cases and 156 comparison slots.")
     print("LIMIT: structural checks do not certify semantic translation parity, security, or protocol performance.")
     return 0
 
