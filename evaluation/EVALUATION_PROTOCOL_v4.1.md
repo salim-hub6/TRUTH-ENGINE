@@ -88,7 +88,7 @@ Report at minimum:
 
 The optional runner in `scripts/run_comparative_eval.py` uses one model endpoint without enabling tools or separate agent contexts. It tests text-level behavior under different instruction sets only. Results from it cannot establish real tool-security enforcement, actual independent-agent behavior, or safe external-action execution. Those require a separate sandboxed deployment evaluation.
 
-## 11. Release gate
+## 12. Release gate
 
 The candidate may progress only when the owners can show:
 - all normative modules reviewed;
