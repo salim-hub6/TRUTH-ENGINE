@@ -32,6 +32,9 @@ REQUIRED = [p for pair in PAIRS for p in pair] + [
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md",
     "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv",
     "scripts/summarize_comparative_runs.py",
+    "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md",
+    "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv",
+    "scripts/summarize_comparative_runs.py",
     "translations/ar/TRANSLATION_POLICY_AR.md",
 ]
 
@@ -81,6 +84,12 @@ def main() -> int:
     if native_ids != ["ATE41-01", "ATE41-02", "ATE41-03", "ATE41-04"]:
         errors.append(f"native Arabic case IDs incomplete or misordered: {native_ids}")
 
+    for rel in ("evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md", "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md"):
+        key_text = (ROOT / rel).read_text(encoding="utf-8")
+        key_ids = re.findall(r"^### (TE41-\\d{2}) —", key_text, re.M)
+        if key_ids != [f"TE41-{i:02d}" for i in range(1, 25)]:
+            errors.append(f"adjudication keys missing, duplicated or misordered in {rel}")
+
     # Validate that the comparison matrix covers all 52 stimuli under all 3 conditions.
     matrix_path = ROOT / "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv"
     with matrix_path.open("r", encoding="utf-8-sig", newline="") as handle:
@@ -114,7 +123,7 @@ def main() -> int:
         for e in errors: print(f"FAIL: {e}")
         print(f"Structural checks failed: {len(errors)}")
         return 1
-    print("PASS: required files, fences, placeholders, local links, paired headings, 24 paired IDs, four native Arabic cases and 156 comparison slots.")
+    print("PASS: required files, fences, placeholders, links, bilingual headings and case IDs, adjudication keys, four native Arabic cases and 156 comparison slots.")
     print("LIMIT: structural checks do not certify semantic translation parity, security, or protocol performance.")
     return 0
 
