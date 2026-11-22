@@ -113,7 +113,7 @@ def main() -> int:
             fixture_keys.add(key)
             if not isinstance(fixture.get("stimulus"), str) or not fixture["stimulus"].strip():
                 errors.append(f"empty stimulus in JSONL fixture at line {line_no}")
-            if fixture.get("case_id") in {"TE41-19", "TE41-25"} and not isinstance(fixture.get("follow_up"), str):
+            if fixture.get("case_id") in {"TE41-19", "TE41-25"} and (not isinstance(fixture.get("follow_up"), str) or not fixture["follow_up"].strip()):
                 errors.append(f"TE41-25 requires a follow_up turn in JSONL fixture at line {line_no}")
     expected_fixture_keys = {(f"TE41-{i:02d}", lang) for i in range(1, 26) for lang in ("EN", "AR")}
     expected_fixture_keys |= {(f"ATE41-{i:02d}", "AR") for i in range(1, 5)}
@@ -149,7 +149,8 @@ def main() -> int:
         language = row.get("language")
         expected_key_file = "evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md" if language == "EN" else "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md"
         expected_fixture_ref = f"evaluation/TEST_FIXTURES_v4.1.jsonl#{case_id}-{language}"
-        if not (row.get("adjudication_ref") or "").startswith(expected_key_file + "#"):
+        expected_adjudication_ref = expected_key_file + "#" + str(case_id).lower()
+        if row.get("adjudication_ref") != expected_adjudication_ref:
             errors.append(f"incorrect adjudication key path for {case_id}/{language}")
         if row.get("stimulus_ref") != expected_fixture_ref:
             errors.append(f"incorrect frozen stimulus reference for {case_id}/{language}")
