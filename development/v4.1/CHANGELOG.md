@@ -19,3 +19,6 @@
 
 - Added 52 frozen bilingual/native-Arabic prompt fixtures, a prompt-only API runner, and bilingual setup guidance; the runner leaves scoring to human adjudicators.
 - Expanded CI to smoke-test prompt assembly and descriptive score aggregation without making paid API calls.
+
+- Added TE41-25 as a genuine two-turn stance-reversal test, with the runner preserving the model's first response before sending the pressure follow-up.
+- Expanded the paired set to 25 cases and the matrix to 54 stimuli / 162 condition slots; added the Arabic fixture, runner support and matching adjudication anchor.
