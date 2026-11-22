@@ -42,3 +42,6 @@ jobs:
 
       - name: Dry-run multi-turn stance reversal fixture
         run: python scripts/run_comparative_eval.py --dry-run --case-id TE41-25
+
+      - name: Dry-run multi-turn order-reversal fixture
+        run: python scripts/run_comparative_eval.py --dry-run --case-id TE41-19
