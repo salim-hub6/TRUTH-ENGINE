@@ -230,7 +230,7 @@ def main() -> int:
             continue
         if (case_id, language) not in fixtures:
             parser.error(f"No frozen stimulus for {case_id}/{language}")
-        if row.get("output_ref") and not args.overwrite:
+        if row.get("output_ref") and not args.overwrite and not (row.get("adjudication_notes") or "").startswith("PARTIAL_RUN:"):
             continue
         selected.append(row)
     if args.limit:
@@ -257,6 +257,10 @@ def main() -> int:
         fixture = fixtures[(row["case_id"], row["language"])]
         system_prompt = load_system_prompt(row["condition"], row["language"])
         stimulus = fixture["stimulus"]
+        payloads = []
+        first_answer = None
+        intermediate_answer = None
+        elapsed_first = 0.0
         try:
             first_answer, payload_first, elapsed_first = call_endpoint(
                 base_url=args.base_url,
@@ -307,6 +311,48 @@ def main() -> int:
             payload = payloads[-1]
         except Exception as exc:
             print(f"STOP: {row['case_id']}/{row['language']}/{row['condition']}: {exc}", file=sys.stderr)
+            if first_answer is not None and payloads:
+                partial_usage = {
+                    key: sum(int((item.get("usage") or {}).get(key, 0) or 0) for item in payloads)
+                    for key in ("prompt_tokens", "completion_tokens", "total_tokens")
+                }
+                partial_latency = elapsed_first
+                partial_path = raw_dir / f"{row['case_id']}-{row['language']}-{row['condition']}-trial{row.get('trial','1')}.partial.json"
+                first_payload = payloads[0]
+                partial_record = {
+                    "case_id": row["case_id"],
+                    "language": row["language"],
+                    "condition": row["condition"],
+                    "trial": row.get("trial", "1"),
+                    "provider": args.provider,
+                    "requested_model": args.model,
+                    "returned_model": first_payload.get("model", args.model),
+                    "tested_commit_sha": args.commit_sha,
+                    "system_prompt_sha256": hashlib.sha256(system_prompt.encode("utf-8")).hexdigest() if system_prompt else None,
+                    "stimulus": stimulus,
+                    "follow_up": fixture.get("follow_up"),
+                    "assistant_intermediate": first_answer,
+                    "assistant_output": None,
+                    "response_ids": [item.get("id") for item in payloads],
+                    "usage": partial_usage,
+                    "latency_seconds": round(partial_latency, 6),
+                    "run_status": "PARTIAL",
+                    "error": str(exc),
+                }
+                partial_path.write_text(json.dumps(partial_record, ensure_ascii=False, indent=2), encoding="utf-8")
+                row.update({
+                    "tested_commit_sha": args.commit_sha,
+                    "provider": args.provider,
+                    "model_id": args.model,
+                    "model_version": first_payload.get("model", args.model),
+                    "tools_enabled": "none",
+                    "agent_execution": "none",
+                    "output_ref": str(partial_path),
+                    "input_tokens": str(partial_usage.get("prompt_tokens", "")),
+                    "output_tokens": str(partial_usage.get("completion_tokens", "")),
+                    "latency_seconds": str(round(partial_latency, 6)),
+                    "adjudication_notes": f"PARTIAL_RUN: first turn completed but later step failed: {exc}",
+                })
             write_matrix(output_matrix, fieldnames, rows)
             return 2
 
