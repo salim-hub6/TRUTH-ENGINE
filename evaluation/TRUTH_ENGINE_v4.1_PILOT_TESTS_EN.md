@@ -252,4 +252,4 @@ cost: ""
 
 ## Publication warning
 
-These 24 initial development cases do not constitute a validated benchmark. Four additional native-Arabic cases are maintained separately. The pilot cases need reference keys, deterministic fixtures where applicable, and a separate held-out set before performance claims. They do not replace the 70 proposed test categories in v4.0.
+These 25 paired initial development cases do not constitute a validated benchmark. Four additional native-Arabic cases are maintained separately. The pilot cases need reference keys, deterministic fixtures where applicable, and a separate held-out set before performance claims. They do not replace the 70 proposed test categories in v4.0.
