@@ -19,6 +19,7 @@ METRICS = [
     "evidence_based_update",
     "contrarian_error",
     "framing_invariance_pass",
+    "presentation_order_invariance_pass",
     "citation_entailment_pass",
     "contradiction_detected",
     "appropriate_abstention",
