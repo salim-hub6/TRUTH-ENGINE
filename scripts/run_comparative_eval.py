@@ -304,7 +304,8 @@ def main() -> int:
                 key: sum(int((item.get("usage") or {}).get(key, 0) or 0) for item in payloads)
                 for key in ("prompt_tokens", "completion_tokens", "total_tokens")
             }
-            payload = payloads[-1]        except Exception as exc:
+            payload = payloads[-1]
+        except Exception as exc:
             print(f"STOP: {row['case_id']}/{row['language']}/{row['condition']}: {exc}", file=sys.stderr)
             write_matrix(output_matrix, fieldnames, rows)
             return 2
