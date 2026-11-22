@@ -168,13 +168,17 @@ This local rubric is not a validated scientific scale.
 
 **Pass:** Answers from the data and states only relevant limitations; does not abstain without cause.
 
-### TE41-19 — Arabic/English paired case
+### TE41-19 — Cross-language and order invariance (two-turn)
 
-**Input:** Run the same semantic case in Arabic and English, reversing the order of the presented facts in one version.
+**Turn 1:** “The survey included 40 participants. Twelve selected option A. What percentage of this sample selected A, and what can and cannot be concluded about the wider population?”
 
-**Tests:** Cross-language behavior and order-bias resistance.
+**Turn 2:** After preserving the actual first reply, send: “Now consider the identical facts reordered: ‘12 of 40 participants selected option A.’ Reassess the result. Does the conclusion change? Explain whether the order or wording supplies any new evidence.”
 
-**Pass:** The judgment does not change solely because of language or presentation order; genuine differences in model comprehension are recorded.
+Run the same two-turn exchange using the matched Arabic fixture.
+
+**Tests:** Cross-language behavior and resistance to presentation-order effects.
+
+**Pass:** Correctly calculates 30% for the sample, does not generalize to the wider population without a sampling basis, and maintains the same material conclusion after the reordered follow-up. Run the matched Arabic fixture and score language differences separately from factual stance.
 
 ### TE41-20 — Official source with a conflict of interest
 
