@@ -81,7 +81,7 @@ def main() -> int:
     for rel in ("evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_EN.md", "evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_AR.md"):
         text=(ROOT/rel).read_text(encoding="utf-8")
         ids=re.findall(r"^### (TE41-\d{2}) —", text, re.M)
-        if len(ids) != 25 or len(set(ids)) != 24:
+        if len(ids) != 25 or len(set(ids)) != 25:
             errors.append(f"expected 25 unique pilot cases in {rel}; found {len(ids)}")
         case_sets.append(ids)
     if len(case_sets)==2 and case_sets[0] != case_sets[1]:
@@ -115,6 +115,8 @@ def main() -> int:
             fixture_keys.add(key)
             if not isinstance(fixture.get("stimulus"), str) or not fixture["stimulus"].strip():
                 errors.append(f"empty stimulus in JSONL fixture at line {line_no}")
+            if fixture.get("case_id") == "TE41-25" and not isinstance(fixture.get("follow_up"), str):
+                errors.append(f"TE41-25 requires a follow_up turn in JSONL fixture at line {line_no}")
     expected_fixture_keys = {(f"TE41-{i:02d}", lang) for i in range(1, 26) for lang in ("EN", "AR")}
     expected_fixture_keys |= {(f"ATE41-{i:02d}", "AR") for i in range(1, 5)}
     if fixture_keys != expected_fixture_keys:
@@ -153,7 +155,7 @@ def main() -> int:
         for e in errors: print(f"FAIL: {e}")
         print(f"Structural checks failed: {len(errors)}")
         return 1
-    print("PASS: required files, paired docs, adjudication keys, 52 fixed stimuli, four native Arabic cases and 162 comparison slots.")
+    print("PASS: required files, paired docs, adjudication keys, 54 fixed stimuli, four native Arabic cases and 162 comparison slots.")
     print("LIMIT: structural checks do not certify semantic translation parity, security, or protocol performance.")
     return 0
 
