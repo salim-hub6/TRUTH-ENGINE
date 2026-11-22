@@ -37,3 +37,6 @@ The English/Arabic pairs for the Core Protocol, Anti-Sycophancy and Constructive
 ## Limits
 
 This review is a documentation-level internal pass. It does not establish behavioral equivalence across models, security effectiveness, calibrated confidence, or performance improvement. No baseline/v4.0/v4.1 model-level comparative run has been completed in this work session.
+
+10. Added aligned Arabic and English adjudication fixtures for the 24 paired cases, plus four Arabic-native stimuli. The fixtures are fixed test inputs but still require independent bilingual approval.
+11. Added a 156-slot comparison plan and a prompt-only runner. It does not provide real tool execution, separate agent contexts or enforcement tests; those remain outside this runner's scope.
