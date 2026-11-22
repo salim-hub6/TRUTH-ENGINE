@@ -19,7 +19,6 @@ PAIRS = [
     ("prompts/TRUTH_ENGINE_v4.1_MASTER_PROMPT_EN.md", "prompts/TRUTH_ENGINE_v4.1_MASTER_PROMPT_AR.md"),
     ("evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_EN.md", "evaluation/TRUTH_ENGINE_v4.1_PILOT_TESTS_AR.md"),
     ("evaluation/EVALUATION_PROTOCOL_v4.1.md", "evaluation/EVALUATION_PROTOCOL_v4.1_AR.md"),
-    ("evaluation/EVALUATION_PROTOCOL_v4.1.md", "evaluation/EVALUATION_PROTOCOL_v4.1_AR.md"),
 ]
 REQUIRED = [p for pair in PAIRS for p in pair] + [
     "development/v4.1/README.md",
@@ -32,7 +31,6 @@ REQUIRED = [p for pair in PAIRS for p in pair] + [
     "evaluation/NATIVE_ARABIC_PILOT_CASES.md",
     "evaluation/EVALUATION_PROTOCOL_v4.1.md",
     "evaluation/EVALUATION_PROTOCOL_v4.1_AR.md",
-    "evaluation/COMPARATIVE_RUN_MATRIX_DATA_DICTIONARY.md",
     "evaluation/COMPARATIVE_RUNNER_GUIDE_EN.md",
     "evaluation/COMPARATIVE_RUNNER_GUIDE_AR.md",
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md",
