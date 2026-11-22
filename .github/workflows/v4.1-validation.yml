@@ -1,0 +1,38 @@
+name: Validate TRUTH ENGINE v4.1 candidate
+
+on:
+  push:
+    branches:
+      - development/v4.1-modular-preview
+    paths:
+      - "development/v4.1/**"
+      - "protocol/v4.1/**"
+      - "prompts/**"
+      - "evaluation/**"
+      - "translations/ar/**"
+      - "scripts/**"
+      - ".github/workflows/v4.1-validation.yml"
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  documentation-and-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate documentation, bilingual structure and run matrix
+        run: python scripts/validate_v4_1_docs.py
+
+      - name: Smoke-test descriptive score aggregation
+        run: python scripts/summarize_comparative_runs.py --output "$RUNNER_TEMP/v4.1-summary-smoke-test.csv"
