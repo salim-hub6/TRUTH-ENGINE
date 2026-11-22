@@ -23,6 +23,8 @@ The English/Arabic pairs for the Core Protocol, Anti-Sycophancy and Constructive
 5. The Arabic Core Protocol's definition of verification coverage was expanded to state its denominator explicitly, matching the English operational definition.
 6. The Arabic Master Prompt now names the Decision Analyst function, matching the English prompt; a minor Arabic typo in the citation-entailment definition was also corrected.
 7. The bilingual pilot set is now accompanied by provisional adjudication keys and standardized fixtures. These are evaluator guidance, not results or an independently validated gold set.
+8. Added an Arabic counterpart to the evaluation protocol and Arabic adjudication fixtures for all 24 paired cases; both remain subject to independent bilingual review.
+9. Added a 156-slot matrix with three conditions per stimulus and a field dictionary clarifying that empty metrics are not-applicable/unscored rather than zero.
 
 ## Remaining review requirements
 
