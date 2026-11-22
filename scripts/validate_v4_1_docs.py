@@ -33,6 +33,8 @@ REQUIRED = [p for pair in PAIRS for p in pair] + [
     "evaluation/EVALUATION_PROTOCOL_v4.1.md",
     "evaluation/EVALUATION_PROTOCOL_v4.1_AR.md",
     "evaluation/COMPARATIVE_RUN_MATRIX_DATA_DICTIONARY.md",
+    "evaluation/COMPARATIVE_RUNNER_GUIDE_EN.md",
+    "evaluation/COMPARATIVE_RUNNER_GUIDE_AR.md",
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md",
     "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md",
     "evaluation/COMPARATIVE_RUN_MATRIX_v4.1.csv",
