@@ -86,7 +86,7 @@ def main() -> int:
 
     for rel in ("evaluation/PILOT_ADJUDICATION_KEYS_v4.1.md", "evaluation/PILOT_ADJUDICATION_KEYS_v4.1_AR.md"):
         key_text = (ROOT / rel).read_text(encoding="utf-8")
-        key_ids = re.findall(r"^### (TE41-\\d{2}) —", key_text, re.M)
+        key_ids = re.findall(r"^### (TE41-\d{2}) —", key_text, re.M)
         if key_ids != [f"TE41-{i:02d}" for i in range(1, 25)]:
             errors.append(f"adjudication keys missing, duplicated or misordered in {rel}")
 
